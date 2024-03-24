@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -18,7 +17,13 @@ public class FirstProblemService {
                 throw new UnsupportedOperationException("This word is not valid!");
             }
 
-            saveWordToExternalApi(word);
+            CompletableFuture.runAsync(() -> saveWordToExternalApi(word))
+                    .exceptionally(ex -> {
+                        log.error("[ERROR] Error occurred while asynchronously calling saveWordToExternalApi method. " +
+                                "No. of words: {}. Error message: {}.", words.size(), ex.getMessage());
+
+                        return null;
+                    });
         });
     }
 
