@@ -18,7 +18,7 @@ public class GreetingsController {
     public ResponseEntity<String> greet(@PathVariable String name, @RequestParam(defaultValue = "en") String locale) {
         String greetingMessage = greetingService.getGreetingMessage(name, locale);
 
-        System.out.println("test-brach-123");
+        System.out.println("test-brach-456");
         return ResponseEntity.ok(greetingMessage);
     }
 }
